@@ -68,14 +68,6 @@ function TwoBySix(props) {
   return <Board {...props} width={5.5} thickness={1.5} />
 }
 
-function TwoByFour(props) {
-  return <Board {...props} width={3.5} thickness={1.5} />
-}
-
-function TwoByTwo(props) {
-  return <Board {...props} width={1.5} thickness={1.5} />
-}
-
 function Wall(props) {
   const top = legHeight - 5.5 / 2
   const step = 5.5 // + oneSixteenth
@@ -88,35 +80,16 @@ function Wall(props) {
   )
 }
 
-function Leg(props) {
-  return <TwoByFour {...props} length={legHeight} y={legHeight / 2} rotation-z={ninetyDegrees} />
-}
-
-function Cap(props) {
-  return <TwoByFour {...props} y={legHeight + 1.5 / 2} rotation-x={-ninetyDegrees} />
-}
-
-function Floorboard(props) {
-  return <Board {...props} y={legHeight - 5.5 * 3 + 0.5} rotation-x={-ninetyDegrees} width={5.5} thickness={1} length={longWidth} />
-}
-
-function Crossbar(props) {
+function Bar(props) {
+  const top = legHeight - 5.5 / 2
+  const step = 5.5 // + oneSixteenth
   return (
-    <Board
-      width={3.5}
-      thickness={1.5}
-      length={shortWidth}
-      y={legHeight - 5.5 * 3 - 1.5 / 2}
-      rotation-x={ninetyDegrees}
-      rotation-z={ninetyDegrees}
-      {...props}
-    />
+    <>
+      <TwoBySix {...props} length={50} y={top} />
+      <TwoBySix {...props} length={100} y={top - step} />
+      <TwoBySix {...props} length={150} y={top - step * 2} />
+    </>
   )
-}
-
-function VerticalSupport(props) {
-  const length = 5.5 * 3 + 1.5
-  return <TwoByTwo y={legHeight - length / 2} length={length} rotation-z={ninetyDegrees} {...props} />
 }
 
 function Scene() {
@@ -142,45 +115,14 @@ function Scene() {
         shadow-camera-near={1}
         shadow-camera-far={7}
       />
-      {/* <fog attach="fog" args={[0xffffff, 100, 700]} /> */}
+      <fog attach="fog" args={[0xffffff, 100, 700]} />
 
       <TweaksContext.Provider value={tweakValues}>
         <group scale={[inchUnits, inchUnits, inchUnits]}>
           <Wall length={longWidth} z={shortWidth / 2 - 1.5 / 2} />
           <Wall length={longWidth} z={-shortWidth / 2 + 1.5 / 2} />
 
-          <Wall length={shortWidth} x={longWidth / 2 + 1.5 / 2} rotation-y={ninetyDegrees} />
-          <Wall length={shortWidth} x={-(longWidth / 2 + 1.5 / 2)} rotation-y={ninetyDegrees} />
-
-          <Leg x={0} z={shortWidth / 2 + 1.5 / 2} />
-          <Leg x={0} z={-(shortWidth / 2 + 1.5 / 2)} />
-          <Leg x={longWidth / 2} z={shortWidth / 2 + 1.5 / 2} />
-          <Leg x={longWidth / 2} z={-(shortWidth / 2 + 1.5 / 2)} />
-          <Leg x={-longWidth / 2} z={shortWidth / 2 + 1.5 / 2} />
-          <Leg x={-longWidth / 2} z={-(shortWidth / 2 + 1.5 / 2)} />
-
-          <Cap length={longWidth} z={shortWidth / 2} />
-          <Cap length={longWidth} z={-shortWidth / 2} />
-          <Cap length={shortWidth + 3.5} x={longWidth / 2 + 3.5 / 2} rotation-z={ninetyDegrees} />
-          <Cap length={shortWidth + 3.5} x={-(longWidth / 2 + 3.5 / 2)} rotation-z={ninetyDegrees} />
-
-          <Floorboard z={-floorBoardSeparation * 2} />
-          <Floorboard z={-floorBoardSeparation} />
-          <Floorboard z={0} />
-          <Floorboard z={floorBoardSeparation} />
-          <Floorboard z={floorBoardSeparation * 2} />
-
-          <VerticalSupport x={longWidth / 4} z={shortWidth / 2 + 1.5 / 2} />
-          <VerticalSupport x={-longWidth / 4} z={shortWidth / 2 + 1.5 / 2} />
-          <VerticalSupport x={longWidth / 4} z={-(shortWidth / 2 + 1.5 / 2)} />
-          <VerticalSupport x={-longWidth / 4} z={-(shortWidth / 2 + 1.5 / 2)} />
-
-          {/* vertical joist if needed: <Crossbar width={3.5} rotation-y={ninetyDegrees} y={legHeight - 5.5 * 3 - 3.5 / 2} /> */}
-          <Crossbar width={3.5} />
-          <Crossbar width={3.5} x={longWidth / 2} />
-          <Crossbar width={3.5} x={-longWidth / 2} />
-          <Crossbar width={1.5} x={longWidth / 4} />
-          <Crossbar width={1.5} x={-longWidth / 4} />
+          <Bar length={longWidth} z={-shortWidth / 2 + 1.5 / 2} />
 
           <mesh rotation-x={-ninetyDegrees} receiveShadow>
             <circleBufferGeometry args={[20 * feet, 128]} />
