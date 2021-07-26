@@ -1,0 +1,25 @@
+{
+  "name": "raised-garden-bed",
+  "version": "1.0.0",
+  "description": "Raised Garden Bed Design",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "drei": "2.2.21",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-scripts": "3.1.1",
+    "react-three-fiber": "5.3.18",
+    "three": "0.124.0",
+    "tweakpane": "1.5.8",
+    "use-tweaks": "0.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
+}
